@@ -1,0 +1,32 @@
+Tim Day 4107381
+Rust Assignment 1, Summer Semester 2018
+
+1.2 Time Complexity of popcnt
+How many loop iterations for a random 64 bit integer, using Kernighan’s method
+
+an unsigned 64 bit integer has a range of 2^64 - 1 (which is 18446744073709551615).
+
+The best case (an integer of 0 with all 0 bits) needs to go through the loop only once.
+The worst case (every bit a 1) will need to loop once for every bit. 
+This will be 64 times for a 64 bit integer.
+
+Running popcnt with the number 18446744073709551615, (2^64 - 1), indeed iterates the loop 64 times
+
+Taking the halfway point between best and worst case, we have an average case of 32 loops.
+
+
+
+1.3 Benchmarking
+
+The result was:
+
+test popcnt_bench       ... bench:      30,746 ns/iter (+/- 4,024)
+test popcnt_table_bench ... bench:       3,798 ns/iter (+/- 777)
+
+The table method is an order of magnitude faster on my CPU, which was surprising to me,
+ (mainly because I didn't know what to expect from this method of benchmarking).
+Some quick research revealed that it is also known as Hamming Distance table method (is this correct?),
+and looking at the pre-populated table in the code I can see why it is called that.
+
+Knowing that the table method uses 8 lookups, it makes sense that it would be substantially faster.
+It would be fun to discuss a little more in class how the table method works.

@@ -1,14 +1,12 @@
 use std::f32;
 
 pub fn sqrt(v: f32) -> f32 {
-
     if v == 0.0 {
         return 0.0;
     } else if v < 0.0 {
         return f32::NAN;
     }
     let mut result : f32 = v / 2.0;  //initial guess
-
     for i in 0..5 {
         result = result - ((result*result - v) / (2.0*result));
     }

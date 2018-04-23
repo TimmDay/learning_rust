@@ -2,14 +2,13 @@ pub fn popcnt(val: u64) -> u32 {
 
     let mut counter : u32 = 0;
     let mut v = val;
-//    v = 0b1010_1010;
+//    v = 0b1010_1010; //fun to use for testing
 
     while v > 0 {
         v &= v - 1;
         counter = counter + 1;
     }
     counter
-//    panic!("Your sqrt implementation goes in place of this panic.");
 }
 
 const POPCNT_TABLE: [u8; 256] = [
