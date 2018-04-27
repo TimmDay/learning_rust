@@ -1,0 +1,15 @@
+Tim Day 4107381
+Assignment 2 - Rust
+
+
+2.3 Compare the running times of the implementation
+
+test mul_bench         ... bench:       1,451 ns/iter (+/- 178)
+test mul_inplace_bench ... bench:         129 ns/iter (+/- 36)
+
+The in_place multiply in place function is much faster. This is due to not needing to do the following:
+- allocate memory for a new vector
+- create pointers from the stack to the heap, and related operations
+- attribute values to the heap
+and probably other operations of which I am unaware. Also, less vector accesses are required during the computation.
+All that the in_place function really needs to worry about is updating values. All of the 'infrastructure' is already in place.
