@@ -1,0 +1,49 @@
+DAY Timothy 4107381
+
+
+
+1.2 ngrams memory use
+How much memory (in bytes) do you expect the Vec<[&char]> returned from char_ngrams to use given that m n-grams are returned? How much of this memory is allocated on the stack and how much on the heap (assuming that the returned Vec lives on the stack)?
+
+
+The original characters that are referenced by the function argument already exist on the heap before the function is called. The function only creates slices that point to this data (and store a length), and then fills a new Vector with references to these slices. This means that we are referencing to existing data, so we do not need to re-store it.
+
+Assuming that the returned Vec lives on the stack, we should need no additional memory allocated to the heap.
+
+The memory allocation to the stack will include: 
+- the memory required for the pointer of each slice reference
+- the memory required for the length of each slice (presumably usize)
+- the above, multiplied by m number of n-grams in the Vec
+- the memory required to instantiate the variable, create the Vec and bid the variable to the Vec
+
+
+
+2.0 Discussion
+
+ulimit -s gives a result of 8192 kB on my mac.
+
+The program approximates stacksize by infinitely recursing a function, and allocating 1kb of stack space to an array each time.
+It also prints the approximation on each iteration.
+The original result was around 7180 kb
+
+Why the difference of ~1000 kB to the ulimit measure? 
+I suspect that it is due to the things we are not counting during the recursions that are consuming stack space.
+
+These include the println! macro, and maybe some other minor operations.
+Indeed, when I included a second println! call, to estimate decreased from 7174 to 6466. So we can estimate that the println! consumes about 708 kB.
+
+Adding that 708 back gives us 7882.
+
+I ammended the program to add this 708 kB back, and then discovered that the '+' operation within the println! call also consumes some of the stack. It is a tricky thing to pin down.
+
+
+tldr;
+println! stack space consumption estimate :  708 kB
+initial program max stack space estimate :	7174 kB
+adjusted program max stack estimate :		7785 kB
+ulimit stack size information :				8192 kB
+assumed stack capacity consumed by other 
+operations in the program 
+(+, +=, x variable binding, function calls): 407 kB
+
+Final Program result : 7785 kB

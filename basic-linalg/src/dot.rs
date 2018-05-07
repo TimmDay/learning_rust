@@ -1,12 +1,13 @@
 pub fn dot(u: &[f32], v: &[f32]) -> f32 {
     assert_eq!(u.len(), v.len());
 
-    let mut dp : f32 = 0.0;
+    let mut dp : f32 = 0.0; // let mut dp = 0f32
     for x in 0..u.len() {
         dp += u[x] * v[x];
     }
     dp
 }
+// always using the current dp value means that we can't do speculative execution (going ahead parallel execution)
 
 #[cfg(test)]
 mod tests {

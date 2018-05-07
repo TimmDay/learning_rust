@@ -22,6 +22,8 @@ const POPCNT_TABLE: [u8; 256] = [
     3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 4, 5, 5, 6, 5, 6, 6, 7, 5, 6, 6, 7, 6, 7, 7, 8,
 ];
 
+
+
 #[allow(dead_code)]
 fn compute_byte_table() -> [u8; 256] {
     let mut table = [0u8; 256];

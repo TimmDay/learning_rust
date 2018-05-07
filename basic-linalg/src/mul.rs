@@ -1,7 +1,13 @@
 pub fn mul(u: &[f32], v: &[f32]) -> Vec<f32> {
     assert_eq!(u.len(), v.len());
 
-    let mut w : Vec<f32> = vec![];
+
+    let mut w : Vec<f32> = vec![0f32; u.len()]; //vec![0f32, u.len()] sets the length correctly and initialises to 0
+    //let mut product = Vec::with_capacity(u.len()); //slower way
+    // the length of product keeps getting modified as we push to it
+    // why is this expensive? speculative execution, it cannot go ahead and do iterations in parrallel because there is
+    //
+
 
     for x in 0..u.len() {
         w.push(u[x]*v[x]);
@@ -15,6 +21,15 @@ pub fn mul_inplace(u: &mut [f32], v: &[f32]) {
     for x in 0..u.len() {
         u[x] = u[x] * v[x];
     }
+}
+
+pub fn mul_fast(u: &mut [f32], v: &[f32]){
+    assert_eq!(u.len(), v.len());
+
+    for i in 0..u.len() {
+        u[i] *= v[i];
+    }
+
 }
 
 #[cfg(test)]

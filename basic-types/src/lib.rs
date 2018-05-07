@@ -6,5 +6,4 @@ extern crate quickcheck;
 extern crate rand;
 
 pub mod popcnt;
-
 pub mod sqrt;
